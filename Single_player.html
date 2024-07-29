@@ -282,6 +282,15 @@
             box-shadow: 0 5px #666;
             transform: translateY(4px);
         }
+
+        /* Styling for the mochi image */
+        #mochi {
+            position: absolute;
+            height: 60px;
+            width: 60px;
+            bottom: 8%;
+            left: 60%;
+        }
     </style>
 </head>
 
@@ -299,19 +308,8 @@
         <div class="line_4"></div>
         <div class="line_5"></div>
         <div class="line_6"></div>
-        <!--div for the car user will control-->
-        <div id="car" class="car">
-            <div class="f_glass"></div>
-            <div class="b_glass"></div>
-            <div class="f_light_l"></div>
-            <div class="f_light_r"></div>
-            <div class="b_light_l"></div>
-            <div class="b_light_r"></div>
-            <div class="f_tyre_l"></div>
-            <div class="f_tyre_r"></div>
-            <div class="b_tyre_l"></div>
-            <div class="b_tyre_r"></div>
-        </div>
+        <!-- img for the car user will control -->
+        <img id="mochi" src="mochi.png" alt="Mochi">
         <!-- id with car_1, car_2 and car_3 is for the obstacle cars-->
         <div id="car_1" class="car">
             <div class="f_glass"></div>
@@ -365,7 +363,7 @@
             var anim_id;
             //saving dom objects to variables
             var container = $('#container'),
-                car = $('#car'),
+                mochi = $('#mochi'),
                 car_1 = $('#car_1'),
                 car_2 = $('#car_2'),
                 car_3 = $('#car_3'),
@@ -382,8 +380,8 @@
             var container_left = parseInt(container.css('left')),
                 container_width = parseInt(container.width()),
                 container_height = parseInt(container.height()),
-                car_width = parseInt(car.width()),
-                car_height = parseInt(car.height()),
+                mochi_width = parseInt(mochi.width()),
+                mochi_height = parseInt(mochi.height()),
                 line_width_l = parseInt(line_5.width()),
                 line_width_r = parseInt(line_6.width());
             //some other declarations
@@ -396,7 +394,7 @@
                 move_up = false,
                 move_down = false;
             /* ------------------------------GAME CODE STARTS HERE------------------------------------------- */
-            /* Move the cars */
+            /* Move the mochi */
             $(document).on('keydown', function (e) {
                 if (game_over === false) {
                     var key = e.keyCode;
@@ -430,26 +428,26 @@
                 }
             });
             function left() {
-                if (game_over === false && parseInt(car.css('left')) > line_width_l) {
-                    car.css('left', parseInt(car.css('left')) - 5);
+                if (game_over === false && parseInt(mochi.css('left')) > line_width_l) {
+                    mochi.css('left', parseInt(mochi.css('left')) - 5);
                     move_left = requestAnimationFrame(left);
                 }
             }
             function right() {
-                if (game_over === false && parseInt(car.css('left')) < container_width - car_width - line_width_r) {
-                    car.css('left', parseInt(car.css('left')) + 5);
+                if (game_over === false && parseInt(mochi.css('left')) < container_width - mochi_width - line_width_r) {
+                    mochi.css('left', parseInt(mochi.css('left')) + 5);
                     move_right = requestAnimationFrame(right);
                 }
             }
             function up() {
-                if (game_over === false && parseInt(car.css('top')) > 10) {
-                    car.css('top', parseInt(car.css('top')) - 3);
+                if (game_over === false && parseInt(mochi.css('top')) > 10) {
+                    mochi.css('top', parseInt(mochi.css('top')) - 3);
                     move_up = requestAnimationFrame(up);
                 }
             }
             function down() {
-                if (game_over === false && parseInt(car.css('top')) < container_height - car_height - 10) {
-                    car.css('top', parseInt(car.css('top')) + 3);
+                if (game_over === false && parseInt(mochi.css('top')) < container_height - mochi_height - 10) {
+                    mochi.css('top', parseInt(mochi.css('top')) + 3);
                     move_down = requestAnimationFrame(down);
                 }
             }
@@ -457,7 +455,7 @@
             anim_id = requestAnimationFrame(repeat);
             function repeat() {
                 if (game_over === false) {
-                    if (collision(car, car_1) || collision(car, car_2) || collision(car, car_3)) {
+                    if (collision(mochi, car_1) || collision(mochi, car_2) || collision(mochi, car_3)) {
                         stop_the_game();
                     }
                     score_counter++;
@@ -482,7 +480,7 @@
                 var car_current_top = parseInt(car.css('top'));
                 if (car_current_top > container_height) {
                     car_current_top = -200;
-                    var car_left = parseInt(Math.random() * (container_width - car_width - line_width_l));
+                    var car_left = parseInt(Math.random() * (container_width - mochi_width - line_width_l));
                     car.css('left', car_left);
                 }
                 car.css('top', car_current_top + speed);
